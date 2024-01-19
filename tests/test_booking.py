@@ -2,6 +2,7 @@ import json
 
 import allure
 import pytest
+from allure_commons._allure import step
 
 from api_handler.authorize import authorize_user
 from api_handler.booking import booking_list, delete_booking, create_booking
@@ -15,10 +16,16 @@ from model.booking import BookingListRes, BookingCreateReq, BookingDates, Bookin
 @allure.tag('smoke')
 @pytest.mark.api
 def test_booking_list(set_url):
-    res = booking_list(set_url + 'booking')
+    with step('Get booking list'):
+        res = booking_list(set_url + 'booking')
+    data = BookingListRes(res.json())
 
-    assert res.status_code == 200
-    assert BookingListRes.model_validate_json(json.dumps(res.json()))
+    with step('Validate response code 200'):
+        assert res.status_code == 200
+    with step('Validate response schema'):
+        assert BookingListRes.model_validate(res.json())
+    with step('Validate value of response'):
+        assert data.root.pop() is not None
 
 
 @allure.story('Booking')
@@ -29,16 +36,21 @@ def test_booking_list(set_url):
 @pytest.mark.parametrize('login, pwd',
                          [('admin', 'password123')])
 def test_booking_deletion(set_url, login, pwd):
-    user_creds = UserAuthReq(username=login, password=pwd)
-    token = authorize_user(set_url + 'auth', user_creds.model_dump())
+    with step('Get booking list'):
+        bookings = BookingListRes(booking_list(set_url + 'booking').json())
 
-    bookings = BookingListRes(booking_list(set_url + 'booking').json())
+    user_creds = UserAuthReq(username=login, password=pwd)
+    with step('Attempt to authorize user successfully'):
+        token = authorize_user(set_url + 'auth', user_creds.model_dump())
 
     id_to_delete = bookings.root[0].bookingid
-    res = delete_booking(set_url + f'booking/{id_to_delete}', token.json())
+    with step(f'Attempt to delete {id_to_delete} bookingid'):
+        res = delete_booking(set_url + f'booking/{id_to_delete}', token.json())
 
-    assert res.status_code == 201
-    assert res.text == 'Created'
+    with step('Validate response code 201'):
+        assert res.status_code == 201
+    with step('Validate value of response'):
+        assert res.text == 'Created'
 
 
 @allure.story('Booking')
@@ -55,14 +67,20 @@ def test_booking_creation(set_url, firstname, lastname, totalprice, depositpaid,
                          checkout=checkout)
 
     reserve = BookingCreateReq(firstname=firstname,
-                            lastname=lastname,
-                            totalprice=totalprice,
-                            depositpaid=depositpaid,
-                            bookingdates=dates,
-                            additionalneeds=additionalneeds
-                            )
-    bookings_res = create_booking(set_url + 'booking', reserve.model_dump())
+                               lastname=lastname,
+                               totalprice=totalprice,
+                               depositpaid=depositpaid,
+                               bookingdates=dates,
+                               additionalneeds=additionalneeds
+                               )
+
+    with step('Attempt to generate booking'):
+        bookings_res = create_booking(set_url + 'booking', reserve.model_dump())
     booking_model = BookingCreateRes.model_validate(bookings_res.json())
 
-    assert bookings_res.status_code == 200
-    assert booking_model.bookingid != 0
+    with step('Validate response schema'):
+        BookingCreateRes.model_validate(bookings_res.json())
+    with step('Validate response code 200'):
+        assert bookings_res.status_code == 200
+    with step('Validate value of response'):
+        assert booking_model.bookingid != 0
