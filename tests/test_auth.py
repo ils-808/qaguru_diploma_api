@@ -17,8 +17,7 @@ from model.error import ErrorRes
 @pytest.mark.parametrize('login, pwd', [('admin', 'password123')])
 def test_login_success(set_url, login, pwd):
     user_creds = UserAuthReq(username=login, password=pwd)
-    with step('Attempt to authorize user successfully'):
-        token = authorize_user(set_url + 'auth', user_creds.model_dump())
+    token = authorize_user(set_url + 'auth', user_creds.model_dump())
 
     with step('Validate response code 200'):
         assert token.status_code == 200
@@ -36,8 +35,7 @@ def test_login_success(set_url, login, pwd):
 @pytest.mark.parametrize('login, pwd', [('admin', '123password123')])
 def test_login_failure(set_url, login, pwd):
     user_creds = UserAuthReq(username=login, password=pwd)
-    with step('Attempt to authorize user unsuccessfully'):
-        token = authorize_user(set_url + 'auth', user_creds.model_dump())
+    token = authorize_user(set_url + 'auth', user_creds.model_dump())
 
     with step('Validate response schema'):
         error = ErrorRes.model_validate(token.json())

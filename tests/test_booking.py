@@ -16,8 +16,7 @@ from model.booking import BookingListRes, BookingCreateReq, BookingDates, Bookin
 @allure.tag('smoke')
 @pytest.mark.api
 def test_booking_list(set_url):
-    with step('Get booking list'):
-        res = booking_list(set_url + 'booking')
+    res = booking_list(set_url + 'booking')
     data = BookingListRes(res.json())
 
     with step('Validate response code 200'):
@@ -36,16 +35,13 @@ def test_booking_list(set_url):
 @pytest.mark.parametrize('login, pwd',
                          [('admin', 'password123')])
 def test_booking_deletion(set_url, login, pwd):
-    with step('Get booking list'):
-        bookings = BookingListRes(booking_list(set_url + 'booking').json())
+    bookings = BookingListRes(booking_list(set_url + 'booking').json())
 
     user_creds = UserAuthReq(username=login, password=pwd)
-    with step('Attempt to authorize user successfully'):
-        token = authorize_user(set_url + 'auth', user_creds.model_dump())
+    token = authorize_user(set_url + 'auth', user_creds.model_dump())
 
     id_to_delete = bookings.root[0].bookingid
-    with step(f'Attempt to delete {id_to_delete} bookingid'):
-        res = delete_booking(set_url + f'booking/{id_to_delete}', token.json())
+    res = delete_booking(set_url + f'booking/{id_to_delete}', token.json())
 
     with step('Validate response code 201'):
         assert res.status_code == 201
@@ -73,9 +69,7 @@ def test_booking_creation(set_url, firstname, lastname, totalprice, depositpaid,
                                bookingdates=dates,
                                additionalneeds=additionalneeds
                                )
-
-    with step('Attempt to generate booking'):
-        bookings_res = create_booking(set_url + 'booking', reserve.model_dump())
+    bookings_res = create_booking(set_url + 'booking', reserve.model_dump())
     booking_model = BookingCreateRes.model_validate(bookings_res.json())
 
     with step('Validate response schema'):
