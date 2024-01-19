@@ -12,6 +12,7 @@ from model.error import ErrorRes
 @allure.title('Success authorization')
 @allure.label('layer', 'api')
 @allure.tag('smoke')
+@pytest.mark.api
 @pytest.mark.parametrize('login, pwd', [('admin', 'password123')])
 def test_login_success(set_url, login, pwd):
     user_creds = UserAuthReq(username=login, password=pwd)
@@ -24,6 +25,7 @@ def test_login_success(set_url, login, pwd):
 @allure.title('Failed authorization')
 @allure.label('layer', 'api')
 @allure.tag('smoke')
+@pytest.mark.api
 @pytest.mark.parametrize('login, pwd', [('admin', '123password123')])
 def test_login_failure(set_url, login, pwd):
     user_creds = UserAuthReq(username=login, password=pwd)

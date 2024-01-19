@@ -13,6 +13,7 @@ from model.booking import BookingListRes, BookingCreateReq, BookingDates, Bookin
 @allure.title('List all booking')
 @allure.label('layer', 'api')
 @allure.tag('smoke')
+@pytest.mark.api
 def test_booking_list(set_url):
     res = booking_list(set_url + 'booking')
 
@@ -24,6 +25,7 @@ def test_booking_list(set_url):
 @allure.title('Delete booking')
 @allure.label('layer', 'api')
 @allure.tag('smoke')
+@pytest.mark.api
 @pytest.mark.parametrize('login, pwd',
                          [('admin', 'password123')])
 def test_booking_deletion(set_url, login, pwd):
@@ -43,6 +45,7 @@ def test_booking_deletion(set_url, login, pwd):
 @allure.title('Create booking')
 @allure.label('layer', 'api')
 @allure.tag('smoke')
+@pytest.mark.api
 @pytest.mark.parametrize('firstname, lastname, totalprice, depositpaid, checkin, checkout, additionalneeds',
                          [('jim', 'brown', 111, True, '2018-01-01', '2019-01-01', 'Breakfast')])
 def test_booking_creation(set_url, firstname, lastname, totalprice, depositpaid, checkin,
