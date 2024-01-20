@@ -19,7 +19,7 @@
 - [x] Получение списка броней
 - [x] Удаление брони
 - [x] Создание новой брони
-- [x] Редактирование сущесвтующей брони
+- [x] Редактирование существующей брони
 
 ----
 
@@ -55,17 +55,38 @@ allure serve
 1. Открыть проект
 2. Нажать "Build Now"
 
+Сопроводительный скриншот:
+<img title="Jenkins" src="images/jenkins.JPG"/>
+
 ----
 ### Allure отчет
 Пример выполнения Allure отчета доступен по ссылке:
 > <a target="_blank" href="https://jenkins.autotests.cloud/job/C08-itpmkz-diploma-api/5/allure/">Ссылка</a>
+
+Отчет:
+<img title="Allure Report" src="images/allure_report.JPG"/>
+
+Детали:
+<img title="Report Details" src="images/allure_details.JPG"/>
+
+
 ----
 ### Интеграция с Allure TestOps
 Пример интеграции доступен по ссылке:
 > <a target="_blank" href="https://allure.autotests.cloud/project/3987/launches">Ссылка</a>
+
+Запуск тестовых прогонов:
+<img title="TestOps" src="images/testops.JPG"/>
+
+Детали тестового прогона:
+<img title="TestOps Details" src="images/testops_details.JPG"/>
+
 ----
 ### Интеграция с Jira
 > <a target="_blank" href="https://jira.autotests.cloud/browse/HOMEWORK-1068">Ссылка</a>
+
+Тикет:
+<img title="TestOps Details" src="images/jira.JPG"/>
 
 ----
 ### Оповещения в Telegram
