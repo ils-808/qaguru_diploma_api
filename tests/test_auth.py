@@ -1,12 +1,10 @@
-import json
-
 import allure
 import pytest
 from allure_commons._allure import step
 
-from api_handler.authorize import authorize_user
-from model.auth import UserAuthReq, UserAuthRes
-from model.error import ErrorRes
+from restful_booker_project_tests.api_handler.authorize import authorize_user
+from restful_booker_project_tests.model.auth import UserAuthReq, UserAuthRes
+from restful_booker_project_tests.model import ErrorRes
 
 
 @allure.story('Authorization')

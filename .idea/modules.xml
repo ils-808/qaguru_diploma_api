@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/diploma_restful-booker.iml" filepath="$PROJECT_DIR$/.idea/diploma_restful-booker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/restful_booker_project.iml" filepath="$PROJECT_DIR$/.idea/restful_booker_project.iml" />
     </modules>
   </component>
 </project>
