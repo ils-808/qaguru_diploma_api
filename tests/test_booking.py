@@ -19,8 +19,6 @@ def test_booking_list(set_url):
     res = booking_list(set_url + 'booking')
     data = BookingListRes(res.json())
 
-    #d = BookingListRes.model_dump(res.json(), by_alias=True)
-
     with step('Validate response code 200'):
         assert res.status_code == 200
     with step('Validate response schema'):
