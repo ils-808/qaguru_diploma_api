@@ -4,7 +4,7 @@ from allure_commons._allure import step
 
 from restful_booker_project_tests.api_handler.authorize import authorize_user
 from restful_booker_project_tests.model.auth import UserAuthReq, UserAuthRes
-from restful_booker_project_tests.model import ErrorRes
+from restful_booker_project_tests.model.error import ErrorRes
 
 
 @allure.story('Authorization')
